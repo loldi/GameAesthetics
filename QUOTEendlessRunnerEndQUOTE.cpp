@@ -27,6 +27,8 @@ int main(){
 	int Px = 2;
 	int Py = 13;
 
+	int bX = Px + 1;
+
 	int Ex = 7 + (rand() % (int)(15 - 7 + 1));
 	
 	int Ey = 13;
@@ -35,8 +37,11 @@ int main(){
 
 	bool gameOver = false;
 
+	bool bulletFired = false;
+
 
 	while (input != 'q'){
+
 
 		cout << " " << endl;
 		cout << " " << endl;
@@ -47,7 +52,9 @@ int main(){
 		cout << "Score:" << endl;
 		cout << score << endl;
 
+
 		Ex--;
+
 
 		for (int i = 0; i < COLS; i++){
 
@@ -56,19 +63,54 @@ int main(){
 
 		grid[Ex][Ey] = '#';
 
-		grid[Px][Py] = 'P';
+		grid[Px][Py] = '>';
 
-	if (input == 'w' && Py > 12){
+	if(input == 'e'){
+		grid[bX][Py] = '-';
+		bX++;
+		bulletFired = true;
+	} 
+	// else {
+	// 	bX = -1;
+	// }
+
+	if(bulletFired && input == 'b'){
+		grid[bX][Py] = '*';
+		grid[bX+1][Py+1] = '*';
+		grid[bX+1][Py-1] = '*';
+		grid[bX-1][Py+1] = '*';
+		grid[bX-1][Py-1] = '*';
+		bulletFired = false;
+
+	}
+
+	if (bX > COLS || bX == -1 || input != 'e'){
+		bX = Px + 1;
+	}
+
+	if (input == 'w' && Py > 0){
 
 		Py--;
 
-	} else if (input != 'w' && input != 'q' && Py < 13){
+	} else if (input == 's' && Py < 13){
 
 		Py++;
 	}
 
-	if (Px == Ex && Py < Ey){
+	if (input == 'd' && Px < COLS){
+
+		Px++;
+
+	} else if (input == 'a' && Py > 1){
+
+		Px--;
+	}
+
+	if (bX == Ex && Py == Ey){
 		score++;
+		Ex = 7 + (rand() % (int)(15 - 7 + 1));
+		Ey = 7 + (rand() % (int)(15 - 7 + 1));
+		bX = -1;
 	}
 
 	if (Px == Ex && Py == Ey){
@@ -78,6 +120,7 @@ int main(){
 
 		Ex = -1;
 		Px = -1;
+		bX = -1;
 
 		cout << " " << endl;
 		cout << " " << endl;
@@ -102,11 +145,11 @@ int main(){
 	if (gameOver && input == 't'){
 
 		Px = 2;
+		bX = Px + 1;
 		Ex = 7 + (rand() % (int)(15 - 7 + 1));
 		score = 0;
 		gameOver = false;
 	}
-		
 
 		for (int i = 0; i < ROWS; i++){
 
