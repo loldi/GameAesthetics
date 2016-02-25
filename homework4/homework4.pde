@@ -1,5 +1,3 @@
-
-
 int itemPower = 0;
 int armorAmount = 0;
 int health = 100;
@@ -10,17 +8,17 @@ boolean attack;
 float pX = 250;
 float pY = 250;
 
-float eX = random(0, 400);
-float eY = random(0, 400);
+float eX = random(0, 300);
+float eY = random(0, 300);
 
-float sX = random(0, 400);
-float sY = random(0, 400);
+float sX = random(0, 300);
+float sY = random(0, 300);
 
-float aX = random(0, 400);
-float aY = random(0, 400);
+float aX = random(0, 300);
+float aY = random(0, 300);
 
-float dX = random(0, 400);
-float dY = random(0, 400);
+float dX = random(0, 300);
+float dY = random(0, 300);
 
 boolean pickedUp = false;
 boolean pickedUpHat = false;
@@ -28,6 +26,9 @@ boolean pickedUpShield = false;
 
 boolean nextTo;
 boolean above;
+
+boolean movingLeft;
+boolean movingRight;
 
 void setup() {
 
@@ -56,6 +57,8 @@ void setup() {
 
 void draw() {
   background(0);
+  
+   println("player pos: " + pX + " " + pY);
 
   int power = 5 + itemPower;
   int defense = 5 + armorAmount;
@@ -114,8 +117,8 @@ void draw() {
     pY = height;
   }
 
-  for (int i = 0; i < width+10; i+=10) {
-    for (int j = 50; j < height+10; j+=10) {
+  for (int i = 10; i < width-10; i+=10) {
+    for (int j = 50; j < height-10; j+=10) {
       if (i == pX && j == pY) {
         fill(0, 255, 255);
         text("@", i, j);
@@ -142,9 +145,21 @@ void draw() {
     pickedUp = true;
   }
   if (pickedUp) {
+        if(movingLeft){
+    sX = pX-10;
+   
+    }
+    if(movingRight){
+        fill(255,0,255);
+        text("/", pX+10, pY);
+        
+        fill(0,255,0);
+        sX = pX + 10;
+        
+    }
 
     itemPower = 10;
-    sX = pX-10;
+   
     sY = pY;
   }
 
@@ -162,8 +177,14 @@ void draw() {
     pickedUpShield = true;
   }
   if (pickedUpShield) {
+     dY = pY;
+    if(movingLeft){
     dX = pX+10;
-    dY = pY;
+   
+    }
+    if(movingRight){
+       dX = pX-10;
+    }
     if (pickedUpHat) {
       armorAmount = 30;
     } else {
@@ -186,11 +207,15 @@ void keyPressed() {
   }
   if (key == CODED) {
     if (keyCode == RIGHT) {
+      movingRight = true;
+      movingLeft = false;
       pX +=10;
     }
   }
   if (key == CODED) {
     if (keyCode == LEFT) {
+      movingRight = false;
+      movingLeft = true;
       pX -=10;
     }
   }
