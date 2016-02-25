@@ -1,3 +1,7 @@
+//arrow keys to move
+//pick up the sword to kill the enemy
+//press 'a' next to the enemy to kill it!
+
 
 
 int itemPower = 0;
