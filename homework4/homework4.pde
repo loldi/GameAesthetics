@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+=======
+//arrow keys to move
+//pick up the sword to kill the enemy
+//press 'a' next to the enemy to kill it!
+
+
+
+>>>>>>> 290f0daa5479182a544f5de7937e2168836a5374
 int itemPower = 0;
 int armorAmount = 0;
 int health = 100;
